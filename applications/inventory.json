@@ -1,0 +1,17 @@
+{
+  "format": "fullmeta-application-inventory/1",
+  "applications": [
+    {
+      "id": "fem",
+      "name": "FEM",
+      "repository": "https://github.com/gbaswfm2021/fem",
+      "releases": "https://github.com/gbaswfm2021/fem/releases"
+    },
+    {
+      "id": "raytracing",
+      "name": "Raytracing",
+      "repository": "https://github.com/gbaswfm2021/raytracing",
+      "releases": "https://github.com/gbaswfm2021/raytracing/releases"
+    }
+  ]
+}
