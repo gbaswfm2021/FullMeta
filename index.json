@@ -1,0 +1,6 @@
+{
+  "format": "fullmeta-workspace/1",
+  "x-fullmeta-schema": "./platform/workspace/workspace.schema.json",
+  "title": "Workspace",
+  "explorer": { "root": "projects", "initialExpanded": ["projects"], "initialSelection": "projects" }
+}
