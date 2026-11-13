@@ -1,0 +1,461 @@
+{
+  "$defs": {
+    "study": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "gs-study",
+          "readOnly": true,
+          "title": "Study ID",
+          "type": "string"
+        },
+        "iterations": {
+          "default": 40,
+          "description": "Number of Gerchberg-Saxton iterations for this Study.",
+          "maximum": 100,
+          "minimum": 1,
+          "title": "GS iterations",
+          "type": "integer"
+        },
+        "name": {
+          "const": "Far-field hologram study",
+          "readOnly": true,
+          "title": "Study name",
+          "type": "string"
+        },
+        "seed": {
+          "default": 20261110,
+          "description": "Unsigned 32-bit seed for deterministic phase initialization in this Study.",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Initialization seed",
+          "type": "integer"
+        },
+        "type": {
+          "const": "farFieldPhaseOnly",
+          "readOnly": true,
+          "title": "Study type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "iterations",
+        "seed"
+      ],
+      "title": "Far-field hologram study",
+      "type": "object"
+    }
+  },
+  "$id": "https://fullmeta.local/applications/gerchbergsaxton/gerchbergsaxton.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "author": "Jensen Li",
+  "description": "A scalar far-field phase-only hologram design.",
+  "properties": {
+    "application": {
+      "const": "gerchbergsaxton"
+    },
+    "format": {
+      "const": "fullmeta-hologram/1"
+    },
+    "metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "default": "Hologram",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    },
+    "model": {
+      "additionalProperties": false,
+      "properties": {
+        "illumination": {
+          "additionalProperties": false,
+          "properties": {
+            "amplitudeFunction": {
+              "description": "Incident illumination amplitude A(x,y), evaluated over the full sampled metasurface plane. Coordinates x and y are physical positions in micrometres. The aperture radius marks the circular area used by the GS constraints; the input profile preview remains visible outside this aperture. The bundled Gaussian example is exp(-((x/89.6)^2+(y/89.6)^2)).",
+              "title": "Amplitude A(x,y)",
+              "type": "string"
+            },
+            "apertureRadius": {
+              "description": "Physical radius of the centered circular metasurface aperture in micrometres. The example metasurface has a 100 µm diameter. The maximum radius is half the physical width of the sampled grid.",
+              "minimum": 0,
+              "title": "Circular aperture radius (µm)",
+              "type": "number"
+            },
+            "gridSize": {
+              "default": 256,
+              "maximum": 256,
+              "minimum": 64,
+              "title": "Square grid size (samples)",
+              "type": "integer"
+            },
+            "samplePitchUm": {
+              "default": 1,
+              "exclusiveMinimum": 0,
+              "title": "Sample pitch (µm)",
+              "type": "number"
+            },
+            "wavelengthNm": {
+              "default": 532,
+              "exclusiveMinimum": 0,
+              "title": "Wavelength (nm)",
+              "type": "number"
+            }
+          },
+          "required": [
+            "wavelengthNm",
+            "gridSize",
+            "samplePitchUm"
+          ],
+          "title": "Illumination",
+          "type": "object"
+        },
+        "study": {
+          "default": [
+            {
+              "id": "gs-study",
+              "iterations": 40,
+              "name": "Far-field hologram study",
+              "seed": 20261110,
+              "type": "farFieldPhaseOnly"
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/study"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "title": "Study",
+          "type": "array"
+        },
+        "target": {
+          "additionalProperties": false,
+          "exclusiveMinimum": 0,
+          "properties": {
+            "svg": {
+              "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 15 85 L 15 15 L 50 60 L 85 15 L 85 85\" fill=\"none\" stroke=\"#000\" stroke-width=\"12\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>",
+              "description": "Paste a self-contained SVG with a viewBox. Its non-transparent artwork becomes the binary far-field target.",
+              "minLength": 1,
+              "title": "Target SVG",
+              "type": "string",
+              "x-fullmeta-ui-behavior": {
+                "context": "projectEditing",
+                "format": "fullmeta-ui-behavior/1",
+                "payload": {
+                  "presentation": {
+                    "placeholder": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\">…</svg>"
+                  },
+                  "widget": {
+                    "settings": {
+                      "multiline": true
+                    },
+                    "type": "valueControl"
+                  }
+                },
+                "target": {
+                  "kind": "field"
+                }
+              }
+            },
+            "targetWidthRadPerUm": {
+              "default": 6.283185307179586,
+              "description": "Physical side width represented by the full SVG viewBox, in rad/µm. The artwork-to-viewBox size ratio sets the actual target width. It must span at least one Fourier bin and no more than the Nyquist width: 2π/(NΔx) to 2π/Δx. Every foreground target bin must lie inside the propagating-wave circle kx² + ky² ≤ k0².",
+              "exclusiveMinimum": 0,
+              "title": "Target width (rad/µm)",
+              "type": "number",
+              "x-fullmeta-ui-behavior": {
+                "context": "projectEditing",
+                "format": "fullmeta-ui-behavior/1",
+                "payload": {
+                  "widget": {
+                    "settings": {},
+                    "type": "valueControl"
+                  }
+                },
+                "target": {
+                  "kind": "field"
+                }
+              }
+            }
+          },
+          "required": [
+            "svg"
+          ],
+          "title": "Target SVG",
+          "type": "object"
+        }
+      },
+      "required": [
+        "target",
+        "illumination",
+        "study"
+      ],
+      "title": "Hologram",
+      "type": "object"
+    },
+    "x-fullmeta-schema": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "application",
+    "x-fullmeta-schema",
+    "format",
+    "metadata",
+    "model"
+  ],
+  "title": "Gerchberg-Saxton Hologram",
+  "type": "object",
+  "x-fullmeta-rules": {
+    "declarative": {
+      "format": "fullmeta-declarative-rules/1",
+      "obligations": [
+        {
+          "constraint": {
+            "other": {
+              "literal": [
+                64,
+                128,
+                256
+              ]
+            },
+            "subject": {
+              "field": "/model/illumination/gridSize"
+            },
+            "type": "memberOf"
+          },
+          "diagnostic": {
+            "message": "Square grid size must be 64, 128, or 256 samples per side.",
+            "path": "/model/illumination/gridSize"
+          },
+          "id": "grid_size_power_of_two",
+          "name": "Square grid size is supported",
+          "scope": {
+            "nested": [],
+            "path": "",
+            "source": "root"
+          },
+          "stage": "model"
+        }
+      ]
+    },
+    "maximumErrors": 80,
+    "rules": [
+      {
+        "as": "__obligationItem0",
+        "forEach": {
+          "from": "root",
+          "path": ""
+        },
+        "pathAs": "__obligationPath0",
+        "rules": [
+          {
+            "let": "path",
+            "value": {
+              "args": [
+                {
+                  "args": [
+                    {
+                      "var": "__obligationPath0"
+                    },
+                    {
+                      "literal": [
+                        "model",
+                        "illumination",
+                        "gridSize"
+                      ]
+                    }
+                  ],
+                  "op": "concat"
+                }
+              ],
+              "op": "pathString"
+            }
+          },
+          {
+            "assert": {
+              "args": [
+                {
+                  "op": "matches",
+                  "schema": {
+                    "literal": {
+                      "type": [
+                        "array",
+                        "object",
+                        "null"
+                      ]
+                    }
+                  },
+                  "value": {
+                    "literal": [
+                      64,
+                      128,
+                      256
+                    ]
+                  }
+                },
+                {
+                  "args": [
+                    {
+                      "literal": [
+                        64,
+                        128,
+                        256
+                      ]
+                    },
+                    {
+                      "path": "/model/illumination/gridSize",
+                      "var": "__obligationItem0"
+                    }
+                  ],
+                  "op": "contains"
+                }
+              ],
+              "op": "all"
+            },
+            "message": "Square grid size must be 64, 128, or 256 samples per side."
+          }
+        ]
+      }
+    ]
+  },
+  "x-fullmeta-runtime": {
+    "editorApi": {
+      "modelRuns": {
+        "handler": "kernel.workspace.model.runs",
+        "input": {
+          "contentType": "application/json",
+          "fields": []
+        },
+        "method": "GET",
+        "output": {
+          "contentType": "application/json",
+          "fields": []
+        },
+        "route": "/api/model/runs",
+        "sortBy": "/completedAt",
+        "sortDescending": true
+      },
+      "modelValidation": "/api/model/validate"
+    },
+    "externalPrograms": {
+      "gsEngine": {
+        "allowedEntries": [
+          "--save-run",
+          "--clear-results",
+          "--run-study"
+        ],
+        "executable": ".runtime/x86_64-pc-windows-gnu/release/gs-engine.exe",
+        "pathType": "relative"
+      }
+    },
+    "schema": "fullmeta-model-runtime/1",
+    "storage": {
+      "modelFile": "gerchbergsaxton.json",
+      "projectRootFolder": "projects",
+      "resultsDirectory": "results",
+      "runsDirectory": "gerchbergsaxton_runs"
+    }
+  },
+  "x-fullmeta-schema": "../../platform/schema-editor/schema-editor.schema.json",
+  "x-fullmeta-ui-graphicsInterfaces": {
+    "actions": {
+      "document.validate": {
+        "execution": {
+          "api": {
+            "validation": "modelValidation"
+          },
+          "inputs": {
+            "file": "document.file",
+            "folder": "document.folder",
+            "model": "document.model"
+          },
+          "operation": "document.validate",
+          "workflow": {
+            "kind": "documentValidation"
+          }
+        },
+        "label": "Validate",
+        "ui": {
+          "selector": "#validate"
+        }
+      }
+    },
+    "schema": "fullmeta-graphics-interfaces/1"
+  },
+  "x-fullmeta-ui-modelEditor": {
+    "layout": {
+      "defaultLayout": "stacked"
+    },
+    "panels": [
+      {
+        "heading": "Far-field hologram study",
+        "note": "Run the selected Study to calculate its scalar far-field hologram.",
+        "selector": "#gs-results-panel",
+        "when": {
+          "path": [
+            "model",
+            "study",
+            "*"
+          ]
+        }
+      }
+    ],
+    "roles": {
+      "study": [
+        "model",
+        "study"
+      ]
+    },
+    "schema": "fullmeta-model-editor-ui/1"
+  },
+  "x-fullmeta-ui-tree": {
+    "children": [
+      {
+        "children": [
+          {
+            "path": [
+              "model",
+              "target"
+            ],
+            "role": "objectRoot",
+            "title": "Target SVG"
+          },
+          {
+            "path": [
+              "model",
+              "illumination"
+            ],
+            "role": "objectRoot",
+            "title": "Design parameters"
+          }
+        ],
+        "title": "Inputs"
+      },
+      {
+        "path": [
+          "model",
+          "study"
+        ],
+        "role": "collection",
+        "title": "Study"
+      }
+    ]
+  }
+}

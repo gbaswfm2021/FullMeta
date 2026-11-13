@@ -1,0 +1,10 @@
+/* Keep the editable SVG source readable without taking over the full Settings panel. */
+[data-setting-path='["svg"]'] {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  height: 120px;
+  resize: vertical;
+  font-family: ui-monospace, Consolas, monospace;
+}

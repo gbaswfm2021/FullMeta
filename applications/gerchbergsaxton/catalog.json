@@ -1,0 +1,11 @@
+{
+  "format": "fullmeta-application/1",
+  "id": "gerchbergsaxton",
+  "name": "Gerchberg-Saxton Hologram",
+  "description": "Design and inspect a scalar far-field phase-only hologram.",
+  "schema": "applications/gerchbergsaxton/gerchbergsaxton.schema.json",
+  "runtimePackage": true,
+  "schemaLoader": "applications/gerchbergsaxton/schema-documents.js",
+  "package": "applications/gerchbergsaxton/package.js",
+  "runtimeBuild": "applications/gerchbergsaxton/runtime-build.json"
+}

@@ -1,0 +1,9 @@
+{
+  "format": "fullmeta-application-runtime-build/1",
+  "targetDirectory": "applications/gerchbergsaxton/.runtime",
+  "crates": ["applications/gerchbergsaxton/gs-rust"],
+  "buildTargets": [
+    {"manifest":"applications/gerchbergsaxton/gs-rust/Cargo.toml","binary":"gs-engine","label":"Gerchberg-Saxton engine"}
+  ],
+  "artifacts": {"gsEngine":"gs-engine"}
+}

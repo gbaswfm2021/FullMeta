@@ -1,0 +1,30 @@
+{
+  "application": "gerchbergsaxton",
+  "format": "fullmeta-hologram/1",
+  "metadata": {
+    "id": "gerchbergsaxton-letter-m",
+    "name": "Letter M Hologram"
+  },
+  "model": {
+    "illumination": {
+      "amplitudeFunction": "exp(-((x/89.6)^2+(y/89.6)^2))",
+      "apertureRadius": 50,
+      "gridSize": 256,
+      "samplePitchUm": 1,
+      "wavelengthNm": 532
+    },
+    "study": [
+      {
+        "id": "gs-study",
+        "iterations": 40,
+        "name": "Far-field hologram study",
+        "seed": 20261110,
+        "type": "farFieldPhaseOnly"
+      }
+    ],
+    "target": {
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M 15 85 L 15 15 L 50 60 L 85 15 L 85 85\" fill=\"none\" stroke=\"#000\" stroke-width=\"12\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+    }
+  },
+  "x-fullmeta-schema": "../../applications/gerchbergsaxton/gerchbergsaxton.schema.json"
+}
