@@ -5,7 +5,8 @@
       "id": "fem",
       "name": "FEM",
       "repository": "https://github.com/gbaswfm2021/fem",
-      "releases": "https://github.com/gbaswfm2021/fem/releases"
+      "releases": "https://github.com/gbaswfm2021/fem/releases",
+      "hiddenReleases": ["v0.1.0"]
     },
     {
       "id": "gerchbergsaxton",
