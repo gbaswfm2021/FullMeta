@@ -8,6 +8,13 @@
       "releases": "https://github.com/gbaswfm2021/fem/releases"
     },
     {
+      "id": "gerchbergsaxton",
+      "name": "Gerchberg-Saxton Hologram",
+      "description": "Design and inspect a scalar far-field phase-only hologram.",
+      "repository": "https://github.com/FullMeta-Project/gerchbergsaxton",
+      "releases": "https://github.com/FullMeta-Project/gerchbergsaxton/releases"
+    },
+    {
       "id": "raytracing",
       "name": "Raytracing",
       "repository": "https://github.com/gbaswfm2021/raytracing",
