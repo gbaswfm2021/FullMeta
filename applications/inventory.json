@@ -11,7 +11,8 @@
       "id": "raytracing",
       "name": "Raytracing",
       "repository": "https://github.com/gbaswfm2021/raytracing",
-      "releases": "https://github.com/gbaswfm2021/raytracing/releases"
+      "releases": "https://github.com/gbaswfm2021/raytracing/releases",
+      "hiddenReleases": ["v1.0.0"]
     }
   ]
 }
